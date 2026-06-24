@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// Use environment variable or fallback to production URL
+const API_URL = import.meta.env.VITE_API_URL || 'https://lms-backend-tiv3.onrender.com/api';
+
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
