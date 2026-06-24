@@ -47,14 +47,18 @@ const Register = () => {
     }
 
     setLoading(true);
+    
+    // ✅ FIX: Make sure parameters are in the correct order
+    // register(fullName, username, email, password, department, phone)
     const result = await register(
-      fullName, 
-      username, 
-      email, 
-      password,
-      department,
-      phone
+      fullName,      // 1: fullName
+      username,      // 2: username
+      email,         // 3: email
+      password,      // 4: password
+      department,    // 5: department
+      phone          // 6: phone
     );
+    
     setLoading(false);
 
     if (!result.success) {

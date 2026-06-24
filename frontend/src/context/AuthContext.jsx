@@ -36,18 +36,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (fullName, username, email, password, preferredLanguage, department, position, phone, joinDate) => {
+  // ✅ FIXED: Register function with correct parameters
+  const register = async (fullName, username, email, password, department, phone) => {
     try {
       const res = await API.post('/auth/register', {
         fullName,
         username,
         email,
         password,
-        preferredLanguage,
         department,
-        position,
-        phone,
-        joinDate
+        phone
       });
 
       if (res.data.success) {
