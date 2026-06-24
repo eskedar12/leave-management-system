@@ -80,7 +80,7 @@ const createLeaveRequest = async (req, res) => {
       leaveType,
       startDate,
       endDate,
-      daysRequested,
+      daysRequested: daysRequested || 1,
       reason,
       status: 'pending',
       calendarSystem: calendarSystem || 'GC'
@@ -205,7 +205,7 @@ const getAllRequests = async (req, res) => {
   }
 };
 
-// 4. Resolve Leave Request (Admin Feature) - ✅ ADD THIS FUNCTION
+// 4. Resolve Leave Request (Admin Feature) - FIXED
 const resolveRequest = async (req, res) => {
   try {
     const { id } = req.params;
@@ -231,10 +231,13 @@ const resolveRequest = async (req, res) => {
 
     const admin = req.user;
 
+    // ✅ FIX: Get days requested (default to 1 if undefined)
+    const daysToDeduct = request.daysRequested || 1;
+
     console.log('📊 Resolving request:', {
       requestId: request.id,
       leaveType: request.leaveType,
-      daysRequested: request.daysRequested,
+      daysRequested: daysToDeduct,
       user: request.user.fullName,
       currentRemainingDays: request.user.remainingDays
     });
@@ -243,16 +246,16 @@ const resolveRequest = async (req, res) => {
       const user = request.user;
       
       // Check if user has enough remaining days
-      if (request.daysRequested > user.remainingDays) {
+      if (daysToDeduct > user.remainingDays) {
         return res.status(400).json({
           success: false,
           message: `Insufficient balance. User has ${user.remainingDays} days left.`
         });
       }
 
-      // ✅ DEDUCT EXACTLY THE DAYS REQUESTED
-      const daysToDeduct = request.daysRequested;
-      user.remainingDays = user.remainingDays - daysToDeduct;
+      // ✅ DEDUCT EXACTLY THE DAYS REQUESTED (ensure it's a number)
+      const newRemainingDays = Number(user.remainingDays) - Number(daysToDeduct);
+      user.remainingDays = newRemainingDays;
       await user.save();
       
       console.log(`✅ Remaining days updated: ${user.fullName} ${user.remainingDays + daysToDeduct} -> ${user.remainingDays} (deducted ${daysToDeduct} days)`);
@@ -262,12 +265,12 @@ const resolveRequest = async (req, res) => {
         user.id,
         'leave_approved',
         `✅ Leave Request Approved`,
-        `Your ${request.leaveType} leave request for ${request.daysRequested} days has been approved by ${admin.fullName}. ${managerComment ? `Comment: ${managerComment}` : ''}`,
+        `Your ${request.leaveType} leave request for ${daysToDeduct} days has been approved by ${admin.fullName}. ${managerComment ? `Comment: ${managerComment}` : ''}`,
         `/dashboard`,
         {
           requestId: request.id,
           approvedBy: admin.fullName,
-          daysRequested: request.daysRequested,
+          daysRequested: daysToDeduct,
           leaveType: request.leaveType
         }
       );
@@ -277,12 +280,12 @@ const resolveRequest = async (req, res) => {
         request.user.id,
         'leave_rejected',
         `❌ Leave Request Rejected`,
-        `Your ${request.leaveType} leave request for ${request.daysRequested} days has been rejected by ${admin.fullName}. ${managerComment ? `Comment: ${managerComment}` : ''}`,
+        `Your ${request.leaveType} leave request for ${daysToDeduct} days has been rejected by ${admin.fullName}. ${managerComment ? `Comment: ${managerComment}` : ''}`,
         `/dashboard`,
         {
           requestId: request.id,
           rejectedBy: admin.fullName,
-          daysRequested: request.daysRequested,
+          daysRequested: daysToDeduct,
           leaveType: request.leaveType
         }
       );
@@ -298,10 +301,10 @@ const resolveRequest = async (req, res) => {
       request
     });
   } catch (error) {
-    console.error('Resolve Request Error:', error);
+    console.error('❌ Resolve Request Error:', error);
     return res.status(500).json({
       success: false,
-      message: 'An error occurred while updating the leave request status.'
+      message: error.message || 'An error occurred while updating the leave request status.'
     });
   }
 };
