@@ -27,9 +27,6 @@ Notification.belongsTo(User, {
   as: 'user'
 });
 
-// LeaveType relationships (if needed)
-// You can add relationships here later
-
 module.exports = {
   sequelize,
   User,

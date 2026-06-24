@@ -54,7 +54,6 @@ const testConnection = async () => {
   }
 };
 
-module.exports = {
-  sequelize,
-  testConnection
-};
+// Export sequelize directly for models
+module.exports = sequelize;
+module.exports.testConnection = testConnection;
