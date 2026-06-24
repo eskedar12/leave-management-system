@@ -25,6 +25,18 @@ const LeaveRequest = sequelize.define('LeaveRequest', {
       }
     }
   },
+  // ✅ ADD THIS FIELD
+  daysRequested: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
+    validate: {
+      min: {
+        args: [1],
+        msg: 'Days requested must be at least 1'
+      }
+    }
+  },
   startDate: {
     type: DataTypes.DATEONLY,
     allowNull: false,
@@ -71,6 +83,11 @@ const LeaveRequest = sequelize.define('LeaveRequest', {
   managerComment: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  calendarSystem: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'GC'
   }
 });
 

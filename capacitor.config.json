@@ -1,0 +1,5 @@
+{
+  "appId": "com.yourcompany.lms",
+  "appName": "LMS Portal",
+  "webDir": "frontend/dist"
+}

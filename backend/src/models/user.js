@@ -75,21 +75,23 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true
   },
-  // SINGLE remaining days field - total days available
+  // ✅ ADD THIS FIELD
   remainingDays: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    defaultValue: 30
+    defaultValue: 30,
+    validate: {
+      min: {
+        args: [0],
+        msg: 'Remaining days cannot be negative'
+      }
+    }
   }
 }, {
   hooks: {
     beforeCreate: async (user) => {
       if (user.password) {
         user.password = await bcrypt.hash(user.password, 10);
-      }
-      // Set default remaining days to 30
-      if (!user.remainingDays) {
-        user.remainingDays = 30;
       }
     },
     beforeUpdate: async (user) => {
