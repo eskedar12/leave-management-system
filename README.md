@@ -10,9 +10,7 @@ Admin: admin / password 123456
 ✨ Features
 Authentication – JWT-based login with role-based access
 
-Leave Management – Submit, approve, reject, and track leave requests
-
-Bilingual Support – Full English/Amharic 
+Leave Management – Submit, approve, reject, and track leave 
 
 Ethiopian Calendar – Dates displayed in Ethiopian calendar for Amharic users
 
