@@ -12,7 +12,7 @@ Authentication – JWT-based login with role-based access
 
 Leave Management – Submit, approve, reject, and track leave requests
 
-Bilingual Support – Full English/Amharic interface with language switcher
+Bilingual Support – Full English/Amharic 
 
 Ethiopian Calendar – Dates displayed in Ethiopian calendar for Amharic users
 
