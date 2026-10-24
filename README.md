@@ -7,7 +7,7 @@ Test Credentials:
 
 Admin: admin / password 123456
 
-✨ Features
+ Features
 Authentication – JWT-based login with role-based access
 
 Leave Management – Submit, approve, reject, and track leave 
