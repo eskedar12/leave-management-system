@@ -18,6 +18,6 @@ Admin Controls – Manage leave types, view all requests, add comments
 
 Audit Logs – Track all user actions for security
 
-🛠️ Tech Stack
+Tech Stack
 Backend: Node.js, Express, Sequelize ORM, MySQL, JWT
 Frontend: React, Vite, i18next, Axios
