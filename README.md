@@ -3,10 +3,6 @@ A bilingual web application for managing employee leave requests with Ethiopian 
 
 🔗 Live Demo: https://lms-frontend-bkom.onrender.com
 
-Test Credentials:
-
-Admin: admin / password 123456
-
  Features
 Authentication – JWT-based login with role-based access
 
