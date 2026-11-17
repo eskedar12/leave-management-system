@@ -1,5 +1,5 @@
 Employee Leave Management System
-A bilingual (English/Amharic) web application for managing employee leave requests with Ethiopian calendar support.
+A bilingual web application for managing employee leave requests with Ethiopian calendar support.
 
 🔗 Live Demo: https://lms-frontend-bkom.onrender.com
 
